@@ -78,10 +78,31 @@ class ApplicationController < Sinatra::Base
 
   # DELETE requests START
 
+  delete "/leisure-location/:id" do
+    LeisureLocation.find(params[:id]).destroy_to_json
+  end
+
+  delete "/leisure-activity/:id" do
+    LeisureActivity.find(params[:id]).destroy_to_json
+  end
+
   delete "/outposts/:id" do
-    Outpost.destroy_all
+    Outpost.find(params[:id]).destroy.to_json
+  end
+
+  delete "/outposts-activity/:id" do
+    OutpostActivity.find(params[:id]).destroy.to_json
   end
 
   # DELETE requests END
+
+  # PATCH requests START
+
+    patch "/leisure-activity-location/:id" do
+      la = LeisureActivity.find(paramas[:id])
+      la.update(params[:activity])
+    end
+
+  # PATCH requests END
 
 end
