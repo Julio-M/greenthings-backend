@@ -6,14 +6,14 @@ class ApplicationController < Sinatra::Base
     { message: "Home" }.to_json
   end
 
-  get "/leisure-acivities" do
+  get "/leisure-activities" do
     la=LeisureActivity.all
-    la.to_json(include: :leisure_locations)
+    la.to_json
   end
 
   get "/leisure-activities/:id" do
     la = LeisureActivity.find(params[:id])
-    la.to_json(include: :leisure_locations)
+    la.to_json(include: :leisure_location)
   end
 
   get "/leisure-locations" do
@@ -38,12 +38,12 @@ class ApplicationController < Sinatra::Base
 
   get "/outpost-activities" do
     oa=OutpostActivity.all
-    oa.to_json(include: :outposts)
+    oa.to_json(include: :outpost)
   end
 
   get "/outpost-activities/:id" do
     ol = OutpostActivity.find(params[:id])
-    ol.to_json(include: :outposts)
+    ol.to_json(include: :outpost)
   end
 
   # GET requests END
@@ -51,27 +51,20 @@ class ApplicationController < Sinatra::Base
   # POST requests START
 
   post "/leisure-acivities" do
-    la = LeisureActivity.create(params[:activity])
-    all = la.leisure_locations.create(params[:leisure_locations])
-    AllLeisure.create(leisure_location_id:all.id, leisure_activity_id:la.id).to_json
+      LeisureActivity.create(params).to_json
   end
 
-  post "/leisure-activities-location/:id" do
-    new_leisure = LeisureActivity.create(params[:activity])
-    AllLeisure.create(leisure_location_id:params[:id],leisure_activity_id:new_leisure.id).to_json
+  post "/leisure-locations" do
+    LeisureLocation.create(params).to_json
   end
+
 
   post "/outpost-activities" do
-    # binding.pry
-    oa = OutpostActivity.create(params[:activity])
-    all = oa.outposts.create(params[:outposts])
-    AllOutpost.create(outpost_id:all.id, outpost_activity_id:oa.id).to_json
+    OutpostActivity.create(params).to_json
   end
 
-  post "/outpost-activities-location/:id" do
-    # binding.pry
-    new_oa = OutpostActivity.create(params[:activity])
-    AllOutpost.create(outpost_id:params[:id], outpost_activity_id:new_oa.id).to_json
+  post "/outposts" do
+    Outpost.create(params).to_json
   end
   
   # POST requests END
@@ -79,11 +72,11 @@ class ApplicationController < Sinatra::Base
   # DELETE requests START
 
   delete "/leisure-location/:id" do
-    LeisureLocation.find(params[:id]).destroy_to_json
+    LeisureLocation.find(params[:id]).destroy.to_json
   end
 
   delete "/leisure-activity/:id" do
-    LeisureActivity.find(params[:id]).destroy_to_json
+    LeisureActivity.find(params[:id]).destroy.to_json
   end
 
   delete "/outposts/:id" do
