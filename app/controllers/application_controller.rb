@@ -91,9 +91,24 @@ class ApplicationController < Sinatra::Base
 
   # PATCH requests START
 
-    patch "/leisure-activity-location/:id" do
-      la = LeisureActivity.find(paramas[:id])
-      la.update(params[:activity])
+    patch "/leisure-activity/:id" do
+      to_update=LeisureActivity.find(params[:id]).update(params)
+      to_update.to_json
+    end
+
+    patch "/leisure-location/:id" do
+      to_update=LeisureLocation.find(params[:id]).update(params)
+      to_update.to_json
+    end
+
+    patch "/outpost-activity/:id" do
+      to_update=OutpostActivity.find(params[:id]).update(params)
+      to_update.to_json
+    end
+
+    patch "/outpost/:id" do
+      to_update=Outpost.find(params[:id]).update(params)
+      to_update.to_json
     end
 
   # PATCH requests END
