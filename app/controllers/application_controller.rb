@@ -1,9 +1,9 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
-  # Get requests START
+  # GET requests START
   get "/" do
-    { message: "Good luck with your project!" }.to_json
+    { message: "Home" }.to_json
   end
 
   get "/leisure-acivities" do
@@ -46,16 +46,42 @@ class ApplicationController < Sinatra::Base
     ol.to_json(include: :outposts)
   end
 
-  # Get requests END
+  # GET requests END
+
+  # POST requests START
 
   post "/leisure-acivities" do
     la = LeisureActivity.create(params[:activity])
-    la.leisure_locations.create(params[:leisure_locations])
-    la.to_json(include: :leisure_locations)
+    all = la.leisure_locations.create(params[:leisure_locations])
+    AllLeisure.create(leisure_location_id:all.id, leisure_activity_id:la.id).to_json
   end
 
-  post "/leisure-activities/:id" do
-    binding.pry
+  post "/leisure-activities-location/:id" do
+    new_leisure = LeisureActivity.create(params[:activity])
+    AllLeisure.create(leisure_location_id:params[:id],leisure_activity_id:new_leisure.id).to_json
   end
+
+  post "/outpost-activities" do
+    # binding.pry
+    oa = OutpostActivity.create(params[:activity])
+    all = oa.outposts.create(params[:outposts])
+    AllOutpost.create(outpost_id:all.id, outpost_activity_id:oa.id).to_json
+  end
+
+  post "/outpost-activities-location/:id" do
+    # binding.pry
+    new_oa = OutpostActivity.create(params[:activity])
+    AllOutpost.create(outpost_id:params[:id], outpost_activity_id:new_oa.id).to_json
+  end
+  
+  # POST requests END
+
+  # DELETE requests START
+
+  delete "/outposts/:id" do
+    Outpost.destroy_all
+  end
+
+  # DELETE requests END
 
 end
