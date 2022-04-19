@@ -10,17 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_18_191024) do
+ActiveRecord::Schema.define(version: 2022_04_19_210136) do
+
+  create_table "all_leisures", force: :cascade do |t|
+    t.integer "leisure_location_id"
+    t.integer "leisure_activity_id"
+    t.datetime "created_at"
+  end
+
+  create_table "all_outposts", force: :cascade do |t|
+    t.integer "outpost_id"
+    t.integer "outpost_activity_id"
+    t.datetime "created_at"
+  end
 
   create_table "leisure_activities", force: :cascade do |t|
-    t.string "avatar"
     t.string "activity_type"
-    t.string "description"
     t.datetime "datetime"
     t.integer "rating"
     t.string "comment"
     t.string "image"
-    t.integer "leisure_location_id"
   end
 
   create_table "leisure_locations", force: :cascade do |t|
@@ -31,13 +40,10 @@ ActiveRecord::Schema.define(version: 2022_04_18_191024) do
   end
 
   create_table "outpost_activities", force: :cascade do |t|
-    t.string "avatar"
     t.string "activity_type"
     t.datetime "datetime"
-    t.string "description"
     t.string "comment"
     t.string "image"
-    t.integer "outpost_id"
   end
 
   create_table "outposts", force: :cascade do |t|
@@ -45,10 +51,11 @@ ActiveRecord::Schema.define(version: 2022_04_18_191024) do
     t.float "latitude"
     t.float "longitude"
     t.integer "rating"
-    t.string "comment"
     t.string "default_image"
     t.string "schedule"
-    t.boolean "open?"
+    t.string "open_months"
+    t.string "notes"
+    t.string "location"
   end
 
 end
