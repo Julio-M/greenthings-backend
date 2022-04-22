@@ -8,7 +8,7 @@ class ApplicationController < Sinatra::Base
 
   get "/leisure-activities" do
     la=LeisureActivity.all
-    la.to_json
+    la.to_json(include: :leisure_location)
   end
 
   get "/leisure-activities/:id" do
@@ -93,7 +93,8 @@ class ApplicationController < Sinatra::Base
 
     patch "/leisure-activity/:id" do
       to_update=LeisureActivity.find(params[:id]).update(params)
-      to_update.to_json
+      le=LeisureActivity.find(params[:id])
+      le.to_json(include: :leisure_location)
     end
 
     patch "/leisure-location/:id" do
@@ -103,7 +104,8 @@ class ApplicationController < Sinatra::Base
 
     patch "/outpost-activity/:id" do
       to_update=OutpostActivity.find(params[:id]).update(params)
-      to_update.to_json
+      oa=OutpostActivity.find(params[:id])
+      oa.to_json(include: :outpost)
     end
 
     patch "/outpost/:id" do
