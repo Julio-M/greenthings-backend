@@ -14,9 +14,9 @@ puts "✅ Done seeding leisure!"
 
 puts "🌱 Seeding outpost..."
 
-o1 = Outpost.create!(name:"O1",latitude:24,longitude:35,rating:3,default_image:"/fake/image",schedule:"8am-5pm",open?:true)
-o2 = Outpost.create!(name:"O1",latitude:24,longitude:35,rating:3,default_image:"/fake/image",schedule:"8am-5pm",open?:true)
-o3 = Outpost.create!(name:"O1",latitude:24,longitude:35,rating:3,default_image:"/fake/image",schedule:"8am-5pm",open?:true)
+o1 = Outpost.create!(name:"O1",latitude:24,longitude:35,rating:3,default_image:"/fake/image",schedule:"8am-5pm", open_months:"k",notes:"notes",location:"location")
+o2 = Outpost.create!(name:"O2",latitude:24,longitude:35,rating:3,default_image:"/fake/image",schedule:"8am-5pm", open_months:"k",notes:"notes",location:"location")
+o3 = Outpost.create!(name:"O4",latitude:24,longitude:35,rating:3,default_image:"/fake/image",schedule:"8am-5pm", open_months:"k",notes:"notes",location:"location")
 
 OutpostActivity.create!(avatar:"a1",activity_type:"recycling",datetime:DateTime.now,description:"biri", comment:"mycom", image:"/fake/image", outpost_id:o1.id)
 OutpostActivity.create!(avatar:"a1",activity_type:"composting",datetime:DateTime.now,description:"biri", comment:"mycom", image:"/fake/image", outpost_id:o2.id)
