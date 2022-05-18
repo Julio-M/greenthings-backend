@@ -1,3 +1,3 @@
 # greenthings-backend
 
-`greenthings-backed` RESTful APIs set up with Ruby and Sinatra.
+`greenthings-backend` RESTful APIs set up with Ruby and Sinatra.
